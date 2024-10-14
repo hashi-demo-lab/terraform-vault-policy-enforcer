@@ -1,0 +1,48 @@
+# Test 1: List secrets engines in dev-team namespace
+# Expectation: Should list transit, kv, sys, but not aws
+vault secrets list -namespace=dev-team
+
+# Test 2: Enable the Transit secrets engine
+# Expectation: Should enable successfully
+vault secrets enable -namespace=dev-team -path=transit transit
+
+# Test 3: Enable the KV secrets engine
+# Expectation: Should enable successfully
+vault secrets enable -namespace=dev-team -path=kv kv-v2
+
+# Test 4: Attempt to enable AWS secrets engine (should fail)
+# Expectation: Should return 403 permission denied
+vault secrets enable -namespace=dev-team -path=aws aws
+
+# Test 5: Store a secret in KV engine
+# Expectation: Should store the secret successfully
+vault kv put -namespace=dev-team kv/mysecret mykey=myvalue
+
+# Test 6: Retrieve the secret from KV engine
+# Expectation: Should retrieve the secret mykey=myvalue
+vault kv get -namespace=dev-team kv/mysecret
+
+# Test 7: List secrets in KV engine
+# Expectation: Should list the secret keys, including mysecret
+vault kv list -namespace=dev-team kv/
+
+# Test 8: Create a transit key with no parameters
+# Expectation: Should NOT create the key successfully becasue both exportable parameter & deletion_allowed parameter are missing
+vault write -namespace=dev-team transit/keys/mykey or vault write -namespace=dev-team -f transit/keys/mykey
+
+# Test 9: Create a transit key with exportable=true
+# Expectation: Should NOT create the key successfully with exportable=true because deletion_allowed parameter is missing
+vault write -namespace=dev-team transit/keys/mykey exportable=true
+
+# Test 10 Create a transit key with both exportable=true AND deletion_allowed=true
+# Expection: Should create the key Succesfully
+vault write -namespace=dev-team transit/keys/mykey exportable=true deletion_allowed=false
+
+
+# Test 10: Attempt to create a transit key with exportable=false (should fail)
+# Expectation: Should return 403 permission denied due to Sentinel policy
+vault write -namespace=dev-team transit/keys/mykey2 exportable=false deletion_allowed=true
+
+# Test 10: Attempt to create a transit key without specifying exportable (should fail)
+# Expectation: Should return 403 permission denied since exportable=true is required
+vault write -namespace=dev-team transit/keys/mykey3
