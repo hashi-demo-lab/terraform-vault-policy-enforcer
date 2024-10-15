@@ -20,7 +20,8 @@ The policy ensures that these security attributes are enforced for all key manag
 
 ### Operation-Specific Handling
 
-- **Key Rotation**: The policy allows key rotation operations (`transit/keys/<key>/rotate`) to bypass the `exportable` and `deletion_allowed` checks, as these operations do not modify these parameters.
+- **Key Rotation**: ### Key Rotation
+The policy allows key rotation operations (`transit/keys/<key>/rotate`) to bypass the `exportable` and `deletion_allowed` checks, as these are considered update operations. Since key rotation is a specific update operation, it requires handling similar to other update operations but is allowed to proceed without requiring `exportable` to be set to true or `deletion_allowed` to be checked.
 - **Read and List Operations**: Read and list operations are not subject to these policy checks, ensuring that users can view and list keys without hitting enforcement errors.
 
 ## How It Works
