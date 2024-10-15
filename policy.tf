@@ -15,3 +15,8 @@ resource "vault_egp_policy" "force_exportable" {
 
   namespace = vault_namespace.dev_team_namespace.path
 }
+
+resource "vault_policy" "export_keys" {
+  name   = "export_keys"
+  policy = file("policies/export_keys.hcl")
+}
