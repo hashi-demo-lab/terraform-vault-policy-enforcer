@@ -9,7 +9,6 @@ module "oidc" {
   vault_oidc_client_secret = var.vault_oidc_client_secret
   namespace                = vault_namespace.dev_team_namespace.path # Pass the created namespace
   token_policy             = "dev"
-  allowed_redirect_uris    = var.allowed_redirect_uris
 }
 
 module "namespaces" {
@@ -17,6 +16,7 @@ module "namespaces" {
 
   oidc_backend_path = module.oidc.jwt_auth_backend_path
   namespace         = vault_namespace.dev_team_namespace.path # Pass the created namespace
+  allowed_redirect_uris    = var.allowed_redirect_uris
 }
 
 # Aaron's identity entity within the dev namespace
