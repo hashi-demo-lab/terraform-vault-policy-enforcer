@@ -1,61 +1,61 @@
 # Function to validate exportable parameter
 validate_exportable = func() {
-  print("Namespace path:", namespace.path)
-  print("Request path:", request.path)
-  print("Request operation:", request.operation)
-  print("Request data:", request.data)
+  print("Policy Enforcement: Exportable Parameter Check")
+  print("Namespace:", namespace.path)
+  print("Request Path:", request.path)
+  print("Operation:", request.operation)
 
   # Skip validation if the operation is "read", "list", or "rotate"
   if request.operation == "read" or request.operation == "list" or request.path contains "/rotate" {
-    print("Skipping exportable validation for read/list/rotate operation.")
+    print("INFO: Exportable validation skipped for read/list/rotate operation.")
     return true
   }
 
   # Check if the request contains "exportable"
   if "exportable" in keys(request.data) {
-    print("Exportable value is:", request.data.exportable)
-    
+    print("INFO: Exportable value found:", request.data.exportable)
+
     # Handle both boolean true and string "true"
     if request.data.exportable != "true" {
-      print("Error: exportable must be true for key", request.path)
+      print("ERROR: 'exportable' must be set to 'true' for key:", request.path)
       return false
     } else {
-      print("Exportable is set to true, allowing the request.")
+      print("SUCCESS: 'exportable' is correctly set to 'true'.")
       return true
     }
   } else {
-    print("Error: exportable parameter is missing for key", request.path)
+    print("ERROR: 'exportable' parameter is missing for key:", request.path)
     return false
   }
 }
 
 # Function to validate deletion_allowed parameter
 validate_deletion_allowed = func() {
-  print("Namespace path:", namespace.path)
-  print("Request path:", request.path)
-  print("Request operation:", request.operation)
-  print("Request data:", request.data)
+  print("Policy Enforcement: Deletion Allowed Parameter Check")
+  print("Namespace:", namespace.path)
+  print("Request Path:", request.path)
+  print("Operation:", request.operation)
 
   # Skip validation if the operation is "read", "list", or "rotate"
   if request.operation == "read" or request.operation == "list" or request.path contains "/rotate" {
-    print("Skipping deletion_allowed validation for read/list/rotate operation.")
+    print("INFO: Deletion_allowed validation skipped for read/list/rotate operation.")
     return true
   }
 
   # Check if the request contains "deletion_allowed"
   if "deletion_allowed" in keys(request.data) {
-    print("Deletion allowed value is:", request.data.deletion_allowed)
-    
+    print("INFO: Deletion_allowed value found:", request.data.deletion_allowed)
+
     # Handle both boolean false and string "false"
     if request.data.deletion_allowed != "false" {
-      print("Error: deletion_allowed must be false for key", request.path)
+      print("ERROR: 'deletion_allowed' must be set to 'false' for key:", request.path)
       return false
     } else {
-      print("Deletion_allowed is set to false, allowing the request.")
+      print("SUCCESS: 'deletion_allowed' is correctly set to 'false'.")
       return true
     }
   } else {
-    print("Error: deletion_allowed parameter is missing for key", request.path)
+    print("ERROR: 'deletion_allowed' parameter is missing for key:", request.path)
     return false
   }
 }
