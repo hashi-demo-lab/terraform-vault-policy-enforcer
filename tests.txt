@@ -38,11 +38,10 @@ vault write -namespace=dev-team transit/keys/mykey exportable=true
 # Expection: Should create the key Succesfully
 vault write -namespace=dev-team transit/keys/mykey exportable=true deletion_allowed=false
 
-
-# Test 10: Attempt to create a transit key with exportable=false (should fail)
+# Test 11: Attempt to create a transit key with exportable=false (should fail)
 # Expectation: Should return 403 permission denied due to Sentinel policy
 vault write -namespace=dev-team transit/keys/mykey2 exportable=false deletion_allowed=true
 
-# Test 10: Attempt to create a transit key without specifying exportable (should fail)
+# Test 12: Attempt to create a transit key without specifying exportable (should fail)
 # Expectation: Should return 403 permission denied since exportable=true is required
 vault write -namespace=dev-team transit/keys/mykey3
