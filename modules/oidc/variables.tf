@@ -17,8 +17,3 @@ variable "token_policy" {
   description = "The token policy to attach to the OIDC role"
   type        = string
 }
-
-variable "allowed_redirect_uris" {
-  description = "Allowed redirect URIs for the OIDC role"
-  type        = list(string)
-}
