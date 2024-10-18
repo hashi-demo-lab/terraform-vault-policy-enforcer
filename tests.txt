@@ -28,7 +28,9 @@ vault kv list -namespace=dev-team kv/
 
 # Test 8: Create a transit key with no parameters
 # Expectation: Should NOT create the key successfully becasue both exportable parameter & deletion_allowed parameter are missing
-vault write -namespace=dev-team transit/keys/mykey or vault write -namespace=dev-team -f transit/keys/mykey
+vault write -namespace=dev-team transit/keys/mykey
+# OR
+vault write -namespace=dev-team -f transit/keys/mykey
 
 # Test 9: Create a transit key with exportable=true
 # Expectation: Should NOT create the key successfully with exportable=true because deletion_allowed parameter is missing
