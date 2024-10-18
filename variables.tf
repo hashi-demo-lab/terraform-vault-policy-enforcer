@@ -23,3 +23,9 @@ variable "allowed_redirect_uris" {
   type        = list(string)
   description = "List of allowed redirect URIs for OIDC"
 }
+
+variable "namespace" {
+  description = "The Vault namespace where the resources should be created"
+  type        = string
+  default     = "dev-team"  # You can customize the default namespace as needed
+}
