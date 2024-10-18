@@ -27,5 +27,5 @@ variable "allowed_redirect_uris" {
 variable "namespace" {
   description = "The Vault namespace where the resources should be created"
   type        = string
-  default     = "dev-team"  # You can customize the default namespace as needed
+  default     = "dev-team"
 }
